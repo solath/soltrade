@@ -1,14 +1,17 @@
+import asyncio
 from soltrade.wallet import find_balance
 from soltrade.config import config
 from soltrade.trading import start_trading
 from soltrade.log import log_general
+from soltrade.tg_bot import send_info
+
 
 
 # Initialize configuration
 config()
 
 def check_json_state() -> bool:
-    if config().keypair and config().other_mint:
+    if config().keypair and config().secondary_mint:
         return True
     return False
 
@@ -34,6 +37,7 @@ except Exception as e:
 # Checks if the run prompt should be displayed
 if can_run:
     log_general.debug("Soltrade has successfully imported the API requirements.")
+
     start_trading()
 else:
     exit()
